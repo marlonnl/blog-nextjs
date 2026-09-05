@@ -1,8 +1,15 @@
-export default function HomePage() {
-  console.log("HOMEPAGE")
+import PostsList from "@/components/PostsList"
+import { SpinLoader } from "@/components/SpinLoader"
+import { Suspense } from "react"
+
+export default async function HomePage() {
   return (
-    <div>
-      <h1>blog</h1>
-    </div>
+    <>
+      <header>Título</header>
+      <Suspense fallback={<SpinLoader />}>
+        <PostsList />
+      </Suspense>
+      <footer>cpoyright</footer>
+    </>
   )
 }
