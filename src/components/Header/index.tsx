@@ -1,9 +1,8 @@
 export function Header() {
   return (
     <header>
-      <h1>
-        <h1
-          className="
+      <h1
+        className="
           font-extrabold
           text-5xl/tight
           py-8
@@ -17,9 +16,8 @@ export function Header() {
           lg:text-7xl/normal
           lg:py-12
           "
-        >
-          <a href="#">Blog</a>
-        </h1>
+      >
+        <a href="#">Blog</a>
       </h1>
     </header>
   )
