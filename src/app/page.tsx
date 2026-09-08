@@ -7,6 +7,7 @@ import PostsList from "@/components/PostsList"
 import { SpinLoader } from "@/components/SpinLoader"
 import { Suspense } from "react"
 import { Title } from "@/components/Title"
+import PostCoverImage from "@/components/PostCoverImage"
 
 export default async function HomePage() {
   return (
@@ -16,30 +17,20 @@ export default async function HomePage() {
       <section
         className="
         grid grid-cols-1 gap-8 mb-16
-
         sm:grid-cols-2
-
         group
         "
       >
-        <Link
-          href="#"
-          className="
-          w-full
-          h-full
-          rounded-xl
-          overflow-hidden
-        "
-        >
-          <Image
-            src="/images/bryen_0.png"
-            width={1200}
-            height={720}
-            alt="título do post"
-            priority
-            className="group-hover:scale-105 transition w-full h-full object-cover"
-          />
-        </Link>
+        <PostCoverImage
+          linkProps={{ href: "#" }}
+          imageProps={{
+            alt: "Ir para a página do post",
+            width: 1200,
+            height: 720,
+            src: "/images/bryen_8.png",
+            priority: true,
+          }}
+        />
         <div className="flex flex-col sm:justify-center">
           <time dateTime="2026-07-09" className="text-slate-500 text-sm/snug">
             10:00 07/09/2026
