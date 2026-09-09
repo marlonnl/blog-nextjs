@@ -13,7 +13,7 @@ export default async function HomePage() {
     <Container>
       <Header />
 
-      <FeaturedPost />
+      {/* <FeaturedPost /> */}
 
       <Suspense fallback={<SpinLoader />}>
         <PostsList />
