@@ -10,3 +10,15 @@ export type PostModel = {
   updatedAt: string
   author: string
 }
+
+// Model apenas com dados necessários
+// para envio a outros elementos via
+// props. Nesse caso ao PostItem
+// DTO = Data Transfer Object
+export type PostModelDTO = {
+  title: string
+  slug: string
+  excerpt: string
+  coverImageUrl: string
+  createdAt: string
+}

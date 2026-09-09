@@ -1,4 +1,4 @@
-import { PostModel } from "@/models/post/post-model"
+import { PostModelDTO } from "@/models/post/post-model"
 import PostCoverImage from "../PostCoverImage"
 import { Title } from "../Title"
 import {
@@ -7,7 +7,7 @@ import {
 } from "@/utils/datetime-formatter"
 
 type PostItemProps = {
-  post: PostModel
+  post: PostModelDTO
   featured?: boolean
 }
 
