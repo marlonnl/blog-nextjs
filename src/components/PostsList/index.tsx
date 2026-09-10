@@ -1,16 +1,16 @@
-import { postRepository } from "@/repositories/post"
 import PostItem from "../PostItem"
 import { toPostModelDTO } from "@/models/post/post-model-mapper"
+import { findAllPublishedPosts } from "@/lib/posts/queries"
 
 export default async function PostsList() {
-  const posts = await postRepository.findAll()
+  const posts = await findAllPublishedPosts()
   const [featuredPost, ...otherPosts] = posts
 
   return (
     <>
       {featuredPost && (
         <section className="grid grid-cols-1 gap-8 mb-16 sm:grid-cols-2 group">
-          <PostItem post={toPostModelDTO(featuredPost)} featured></PostItem>
+          <PostItem post={toPostModelDTO(featuredPost)} featured />
         </section>
       )}
 
