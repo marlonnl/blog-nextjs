@@ -14,7 +14,7 @@ export default async function PostsList() {
         </section>
       )}
 
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 mb-16 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {otherPosts.map(post => (
           <div className="flex flex-col gap-4 group" key={post.id}>
             <PostItem post={toPostModelDTO(post)} key={post.id} />
