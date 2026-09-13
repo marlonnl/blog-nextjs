@@ -1,9 +1,16 @@
+import { findPostBySlugCached } from "@/lib/posts/queries"
+
 type PostSlugPageProps = {
   params: Promise<{ slug: string }>
 }
 
 export default async function PostSlugPage({ params }: PostSlugPageProps) {
   const { slug } = await params
+  const post = await findPostBySlugCached(slug)
 
-  return <p>Dinamico de {slug}</p>
+  return (
+    <div>
+      <p>{post.title}</p>
+    </div>
+  )
 }
