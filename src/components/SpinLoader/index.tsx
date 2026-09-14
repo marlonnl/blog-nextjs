@@ -9,7 +9,6 @@ export function SpinLoader({ className = "" }: SpinLoaderProps) {
       flex
       items-center
       justify-center
-      bg-amber-400
       ${className}
       `}
     >
