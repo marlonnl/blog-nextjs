@@ -1,3 +1,5 @@
+import Link from "next/link"
+
 export function Header() {
   return (
     <header>
@@ -17,7 +19,7 @@ export function Header() {
           lg:py-12
           "
       >
-        <a href="#">Blog</a>
+        <Link href="/">Blog</Link>
       </h1>
     </header>
   )
