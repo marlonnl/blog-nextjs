@@ -5,6 +5,7 @@ import {
   datetimeFormatter,
   relativeDatatimeFormatter,
 } from "@/utils/datetime-formatter"
+import PostDate from "../PostDate"
 
 type PostItemProps = {
   post: PostModelDTO
@@ -27,13 +28,7 @@ export default function PostItem({ post, featured = false }: PostItemProps) {
         }}
       />
       <div className="flex flex-col sm:justify-center">
-        <time
-          dateTime={post.createdAt}
-          title={relativeDatatimeFormatter(post.createdAt)}
-          className="text-slate-500 text-sm/snug"
-        >
-          {datetimeFormatter(post.createdAt)}
-        </time>
+        <PostDate dateTime={post.createdAt} />
         <Title url={postLink} as={featured ? "h1" : "h2"}>
           {post.title}
         </Title>
