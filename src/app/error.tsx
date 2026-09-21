@@ -1,4 +1,4 @@
-"use client"
+"use client" // ao definir o componente como client, todos os componentes importados nele também passam a ser client
 
 import ErrorMessage from "@/components/ErrorMessage"
 import { useEffect } from "react"
