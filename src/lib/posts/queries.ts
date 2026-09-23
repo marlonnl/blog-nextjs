@@ -12,7 +12,9 @@ export const findPostByIdCached = cache(
 
 export const findPostBySlugCached = cache(async (slug: string) => {
   // slug não existe, retorna undefined/notFound
-  const post = await postRepository.findBySlug(slug).catch(() => undefined)
+  const post = await postRepository
+    .findBySlugPublished(slug)
+    .catch(() => undefined)
 
   if (!post) notFound()
   return post
