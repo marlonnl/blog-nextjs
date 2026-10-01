@@ -10,3 +10,8 @@ export function relativeDatatimeFormatter(rawDatetime: string): string {
   const date = new Date(rawDatetime)
   return formatDistanceToNow(date, { locale: ptBR, addSuffix: true })
 }
+
+export function formatHour(rawDatetime: number): string {
+  const date = new Date(rawDatetime)
+  return format(date, "HH:mm:ss", { locale: ptBR })
+}
