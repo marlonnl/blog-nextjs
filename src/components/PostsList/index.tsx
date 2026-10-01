@@ -1,6 +1,6 @@
 import PostItem from "../PostItem"
 import { toPostModelDTO } from "@/models/post/post-model-mapper"
-import { findAllPublishedPostsCached } from "@/lib/posts/queries"
+import { findAllPublishedPostsCached } from "@/lib/posts/queries/public"
 
 export default async function PostsList() {
   const posts = await findAllPublishedPostsCached()

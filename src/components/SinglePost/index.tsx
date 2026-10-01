@@ -1,4 +1,4 @@
-import { findPostBySlugCached } from "@/lib/posts/queries"
+import { findPublishedPostBySlugCached } from "@/lib/posts/queries/public"
 import Image from "next/image"
 import { Title } from "../Title"
 import PostDate from "../PostDate"
@@ -9,7 +9,7 @@ type SinglePostProps = {
 }
 
 export default async function SinglePost({ slug }: SinglePostProps) {
-  const post = await findPostBySlugCached(slug)
+  const post = await findPublishedPostBySlugCached(slug)
 
   return (
     <article className="mb-16">
