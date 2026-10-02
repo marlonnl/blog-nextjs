@@ -3,11 +3,10 @@ import { readFile } from "fs/promises"
 
 import { PostModel } from "@/models/post/post-model"
 import { PostRepository } from "./post-repository"
+import { SIMULATE_LOADING_TIME } from "@/lib/constants"
 
 const ROOT_DIR = process.cwd()
 const JSON_POSTS_PATH = resolve(ROOT_DIR, "src", "db", "seed", "posts.json")
-
-const SIMULATE_LOADING_TIME = 0
 
 export class JsonPostRepository implements PostRepository {
   private async simulateWait() {

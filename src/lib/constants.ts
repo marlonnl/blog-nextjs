@@ -1,0 +1,1 @@
+export const SIMULATE_LOADING_TIME = 500
