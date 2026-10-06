@@ -30,6 +30,9 @@ export default function DialogButton({
         shadow-[4px_4px_0_0_#000]
         hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_#000]
         active:translate-x-1 active:translate-y-1 active:shadow-none
+
+        disabled:bg-slate-500
+        disabled:cursor-not-allowed
     `}
     >
       {children}
