@@ -1,6 +1,7 @@
 import { findAllPostsAdmin } from "@/lib/posts/queries/admin"
 import Link from "next/link"
 import { DeletePostButton } from "../admin/DeletePostButton"
+import DialogButton from "../admin/DialogButton"
 
 export default async function PostsListAdmin() {
   const posts = await findAllPostsAdmin()
@@ -59,47 +60,10 @@ export default async function PostsListAdmin() {
               flex justify-around items-center
             "
             >
-              <button
-                className="
-                text-black font-bold
-                bg-[#FFD93D] hover:bg-[#FFC800]
-                  cursor-pointer
-                  transition
-
-                  flex items-center justify-center
-
-                  py-2 px-4
-
-                  border-4 border-black rounded-none
-                  shadow-[4px_4px_0_0_#000]
-                  hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_#000]
-                  active:translate-x-1 active:translate-y-1 active:shadow-none
-              "
-              >
-                Confirmar
-              </button>
-              <button
-                autoFocus
-                className="
-                text-black font-bold
-                bg-[#FF6B9D] hover:bg-[#FF4D8B]
-                cursor-pointer
-                transition
-
-                flex items-center justify-center
-
-                py-2 px-4
-
-                border-4 border-black rounded-none
-                shadow-[4px_4px_0_0_#000]
-                hover:translate-x-0.5 hover:translate-y-0.5 hover:shadow-[2px_2px_0_0_#000]
-                active:translate-x-1 active:translate-y-1 active:shadow-none
-
-                focus:outline-none
-              "
-              >
+              <DialogButton color="CONFIRM">Confirmar</DialogButton>
+              <DialogButton color="CANCEL" autoFocus>
                 Cancelar
-              </button>
+              </DialogButton>
             </div>
           </div>
         </div>
