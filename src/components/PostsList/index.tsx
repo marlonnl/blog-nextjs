@@ -1,10 +1,19 @@
 import PostItem from "../PostItem"
 import { toPostModelDTO } from "@/models/post/post-model-mapper"
 import { findAllPublishedPostsCached } from "@/lib/posts/queries/public"
+import ErrorMessage from "../ErrorMessage"
 
 export default async function PostsList() {
   const posts = await findAllPublishedPostsCached()
   const [featuredPost, ...otherPosts] = posts
+
+  if (posts.length <= 0)
+    return (
+      <ErrorMessage
+        contentTitle="Ops... 😅"
+        content="Ainda não existem postagens para ser exibida"
+      />
+    )
 
   return (
     <>

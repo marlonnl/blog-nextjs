@@ -12,7 +12,7 @@ export async function findAllPublishedPostsCached() {
 
 export async function findPublishedPostBySlugCached(slug: string) {
   "use cache"
-  cacheTag("post", `post-${slug}`)
+  cacheTag(`post-${slug}`)
 
   const post = await postRepository
     .findBySlugPublished(slug)
