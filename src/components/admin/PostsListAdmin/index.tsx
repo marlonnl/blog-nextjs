@@ -1,7 +1,7 @@
+import ErrorMessage from "@/components/ErrorMessage"
 import { findAllPostsAdmin } from "@/lib/posts/queries/admin"
 import Link from "next/link"
-import { DeletePostButton } from "../admin/DeletePostButton"
-import ErrorMessage from "../ErrorMessage"
+import { DeletePostButton } from "../DeletePostButton"
 
 export default async function PostsListAdmin() {
   const posts = await findAllPostsAdmin()
