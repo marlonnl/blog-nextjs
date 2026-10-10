@@ -1,14 +1,21 @@
+import { SpinLoader } from "@/components/SpinLoader"
+import { Suspense } from "react"
+
 type AdminPostIdPageProps = {
   params: Promise<{ id: string }>
 }
 
-export default async function AdminPostIdPage({
-  params,
-}: AdminPostIdPageProps) {
-  // await connection()
-
+async function PostContent({ params }: AdminPostIdPageProps) {
   const { id } = await params
   return <div>admin post id: {id}</div>
+}
+
+export default function AdminPostIdPage({ params }: AdminPostIdPageProps) {
+  return (
+    <Suspense fallback={<SpinLoader />}>
+      <PostContent params={params} />
+    </Suspense>
+  )
 }
 
 // src/app/page.tsx
