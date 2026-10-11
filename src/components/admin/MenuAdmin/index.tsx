@@ -44,6 +44,8 @@ export function MenuAdmin() {
     `}
     >
       <button
+        aria-label={isOpen ? "Fechar menu" : "Abrir menu"}
+        title={isOpen ? "Fechar menu" : "Abrir menu"}
         onClick={() => setIsOpen(s => !s)}
         className={`${linkStyle} text-amber-800 italic sm:hidden`}
       >
@@ -59,15 +61,31 @@ export function MenuAdmin() {
         )}
       </button>
 
-      <a href="/" target="_blank" className={linkStyle}>
+      <a
+        href="/"
+        target="_blank"
+        aria-label="Ir para a home"
+        title="Ir para a home"
+        className={linkStyle}
+      >
         <HouseIcon /> home
       </a>
 
-      <Link href="/admin/post" className={linkStyle}>
+      <Link
+        href="/admin/post"
+        aria-label="Ir para lista de posts"
+        title="Ir para lista de posts"
+        className={linkStyle}
+      >
         <FileTextIcon /> posts
       </Link>
 
-      <Link href="/admin/new" className={linkStyle}>
+      <Link
+        href="/admin/post/new"
+        aria-label="Criar novo post"
+        title="Criar novo post"
+        className={linkStyle}
+      >
         <PlusCircleIcon /> novo post
       </Link>
     </nav>
