@@ -1,4 +1,5 @@
 import DialogButton from "../admin/DialogButton"
+import { Button } from "../Button"
 
 type DialogProps = {
   isVisible?: boolean
@@ -57,17 +58,17 @@ export default function Dialog({
                   flex justify-around items-center
                 "
         >
-          <DialogButton color="CONFIRM" disabled={disabled} onClick={onConfirm}>
+          <Button variant="default" disabled={disabled} onClick={onConfirm}>
             Confirmar
-          </DialogButton>
-          <DialogButton
-            color="CANCEL"
+          </Button>
+          <Button
+            variant="danger"
             disabled={disabled}
             onClick={handleCancel}
             autoFocus
           >
             Cancelar
-          </DialogButton>
+          </Button>
         </div>
       </div>
     </div>
