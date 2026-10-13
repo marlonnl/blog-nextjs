@@ -1,4 +1,3 @@
-import DialogButton from "../admin/DialogButton"
 import { Button } from "../Button"
 
 type DialogProps = {
