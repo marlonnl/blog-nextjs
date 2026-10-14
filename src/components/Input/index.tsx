@@ -14,6 +14,7 @@ export function Input({ labelText, ...props }: InputProps) {
           {labelText}
         </label>
       )}
+      {/* focus:translate-x-0.5 focus:translate-y-0.5 */}
       <input
         className={`
           bg-stone-200
@@ -27,7 +28,6 @@ export function Input({ labelText, ...props }: InputProps) {
           text-base/tight
 
           focus:shadow-[4px_4px_0_0_#000]
-          focus:translate-x-0.5 focus:translate-y-0.5
 
           disabled:cursor-not-allowed
           disabled:shadow-[2px_2px_0_0_#7b3306]
