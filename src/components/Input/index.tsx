@@ -22,7 +22,7 @@ export function Input({ labelText, ...props }: InputProps) {
           border-2
           shadow-[2px_2px_0_0_#000]
           p-2
-          mb-6 w-full
+          w-full
 
           text-base/tight
 
