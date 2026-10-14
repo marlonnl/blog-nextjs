@@ -24,6 +24,12 @@ export function MarkdownEditor({
 
   return (
     <div>
+      {labelText && (
+        <label htmlFor={id} className="text-sm font-bold">
+          {labelText}
+        </label>
+      )}
+
       <MDEditor
         value={value}
         onChange={value => {
