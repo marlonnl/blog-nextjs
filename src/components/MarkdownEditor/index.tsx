@@ -1,5 +1,5 @@
 import MDEditor from "@uiw/react-md-editor"
-import { useId, useState } from "react"
+import { useId } from "react"
 import rehypeSanitize from "rehype-sanitize"
 import remarkGfm from "remark-gfm"
 
@@ -23,7 +23,7 @@ export function MarkdownEditor({
   // const [value, setValue] = useState("a")
 
   return (
-    <div>
+    <div className="flex flex-col gap-2">
       {labelText && (
         <label htmlFor={id} className="text-sm font-bold">
           {labelText}
