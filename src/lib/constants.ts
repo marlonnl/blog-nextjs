@@ -1,1 +1,2 @@
 export const SIMULATE_LOADING_TIME = 500
+export const IMAGE_UPLOAD_MAX_SIZE = 921600 // ~900 kb
