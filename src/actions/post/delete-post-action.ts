@@ -12,7 +12,7 @@ export async function deletePostAction(id: string) {
 
   logColor("" + id)
 
-  if (!id || typeof id != "string") {
+  if (!id || typeof id !== "string") {
     return {
       error: "Dados inválidos",
     }
