@@ -1,6 +1,12 @@
 "use server"
 
-import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants"
+import {
+  IMAGE_SERVER_URL,
+  IMAGE_UPLOAD_DIR,
+  IMAGE_UPLOAD_MAX_SIZE,
+} from "@/lib/constants"
+import { mkdir, writeFile } from "fs/promises"
+import { extname, resolve } from "path"
 
 type UploadImageActionResult = {
   url: string
@@ -35,6 +41,20 @@ export async function uploadImageAction(
     return doResult({ error: "Imagem inválida" })
   }
 
-  // TODO: enviar o arquivo
-  return doResult({ url: "URL" })
+  const imageExtension = extname(file.name)
+  const uniqueImageName = `${Date.now()}${imageExtension}`
+
+  const uploadPath = resolve(process.cwd(), "public", IMAGE_UPLOAD_DIR)
+  await mkdir(uploadPath, { recursive: true })
+
+  const fileArrayBuffer = await file.arrayBuffer()
+  const buffer = Buffer.from(fileArrayBuffer)
+
+  const filePath = resolve(uploadPath, uniqueImageName)
+
+  await writeFile(filePath, buffer)
+
+  const url = `${IMAGE_SERVER_URL}/${uniqueImageName}`
+
+  return doResult({ url })
 }
