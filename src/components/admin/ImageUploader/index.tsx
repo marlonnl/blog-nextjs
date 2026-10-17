@@ -4,12 +4,13 @@ import { uploadImageAction } from "@/actions/upload/upload-image-action"
 import { Button } from "@/components/Button"
 import { IMAGE_UPLOAD_MAX_SIZE } from "@/lib/constants"
 import { ImageUpIcon } from "lucide-react"
-import { useRef, useTransition } from "react"
+import { useRef, useState, useTransition } from "react"
 import { toast } from "react-toastify"
 
 export function ImageUploader() {
   const [isUploading, startTransition] = useTransition()
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [imgUrl, setImgUrl] = useState("")
 
   function handleImageUploadClick() {
     if (!fileInputRef.current) return
@@ -42,11 +43,12 @@ export function ImageUploader() {
       if (result.error) {
         toast.error(result.error)
         fileInput.value = ""
+        setImgUrl("")
         return
       }
 
-      // TODO: continuar depois
-      toast.success(result.url)
+      setImgUrl(result.url)
+      toast.success("Imagem enviada")
     })
 
     fileInput.value = ""
@@ -59,10 +61,25 @@ export function ImageUploader() {
         variant="default"
         type="button"
         size="sm"
+        disabled={isUploading}
       >
         <ImageUpIcon />
         Enviar imagem
       </Button>
+
+      {imgUrl && (
+        <div className="my-4 flex flex-col gap-4 items-start">
+          {/* eslint-disable-next-line */}
+          <img
+            src={imgUrl}
+            className="transition grow-0 border-4 border-black rounded-none shadow-[4px_4px_0_0_#000]"
+          />
+          <p>
+            <b>URL</b>: {imgUrl}
+          </p>
+        </div>
+      )}
+
       <input
         type="file"
         name="file"
@@ -70,6 +87,7 @@ export function ImageUploader() {
         className="hidden"
         accept="image/*"
         onChange={handleChange}
+        disabled={isUploading}
       />
     </div>
   )
