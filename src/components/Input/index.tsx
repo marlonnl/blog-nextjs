@@ -4,11 +4,11 @@ type InputProps = {
   labelText?: string
 } & React.ComponentProps<"input">
 
-export function Input({ labelText, ...props }: InputProps) {
+export function Input({ labelText, className = "", ...props }: InputProps) {
   const id = useId()
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className={`flex flex-col gap-2 ${className}`}>
       {labelText && (
         <label htmlFor={id} className="text-sm font-bold">
           {labelText}
@@ -37,8 +37,6 @@ export function Input({ labelText, ...props }: InputProps) {
           read-only:bg-stone-300
 
           transition-all
-
-          ${props.className}
        `}
         {...props}
         id={id}
