@@ -5,9 +5,15 @@ import { MarkdownEditor } from "@/components/MarkdownEditor"
 import { useState } from "react"
 import { ImageUploader } from "../ImageUploader"
 import { InputCheckbox } from "@/components/InputCheckbox"
+import { PublicPost } from "@/dto/post"
+import { Button } from "@/components/Button"
 
-export function ManagePostForm() {
-  const [contentValue, setContentValue] = useState("")
+type ManagePostFormProps = {
+  publicPost?: PublicPost
+}
+
+export function ManagePostForm({ publicPost }: ManagePostFormProps) {
+  const [contentValue, setContentValue] = useState(publicPost?.content || "")
 
   return (
     <form action="" className="my-10">
@@ -20,7 +26,7 @@ export function ManagePostForm() {
             placeholder="ID gerado automaticamente"
             type="text"
             readOnly
-            defaultValue={"sevivjs-4wn4-4wjj"}
+            defaultValue={publicPost?.id || ""}
             className="w-[45%]"
           />
 
@@ -31,7 +37,7 @@ export function ManagePostForm() {
             placeholder="slug"
             type="text"
             readOnly
-            defaultValue={"slug"}
+            defaultValue={publicPost?.slug || ""}
             className="w-[50%]"
           />
         </div>
@@ -41,7 +47,7 @@ export function ManagePostForm() {
           name="author"
           type="text"
           placeholder="autor"
-          defaultValue={""}
+          defaultValue={publicPost?.author || ""}
         />
 
         <Input
@@ -49,14 +55,14 @@ export function ManagePostForm() {
           placeholder="título do novo post"
           name="title"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.title || ""}
         />
         <Input
           labelText="Trecho/resumo"
           placeholder="trecho ou resumo"
           name="excerpt"
           type="text"
-          defaultValue={""}
+          defaultValue={publicPost?.excerpt || ""}
         />
 
         <MarkdownEditor
@@ -75,7 +81,7 @@ export function ManagePostForm() {
             name="coverImageUrl"
             placeholder="coloque a url da imagem para ser usada como capa"
             type="text"
-            defaultValue={""}
+            defaultValue={publicPost?.coverImageUrl || ""}
             className="w-[50%]"
           />
 
@@ -83,8 +89,11 @@ export function ManagePostForm() {
             labelText="Publicar postagem?"
             type="checkbox"
             name="published"
+            defaultChecked={publicPost?.published || false}
           />
         </div>
+
+        <Button>Enviar</Button>
       </div>
     </form>
   )
