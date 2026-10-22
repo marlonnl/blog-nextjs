@@ -1,6 +1,6 @@
 import { ManagePostForm } from "@/components/admin/ManagePostForm"
 import { SpinLoader } from "@/components/SpinLoader"
-import { makePublicPost } from "@/dto/post"
+import { makePublicPostFromDb } from "@/dto/post"
 import { findPostByIdAdmin } from "@/lib/posts/queries/admin"
 import { Metadata } from "next"
 import { notFound } from "next/navigation"
@@ -20,7 +20,7 @@ async function PostContent({ params }: AdminPostIdPageProps) {
 
   if (!post) notFound()
 
-  const publicPost = makePublicPost(post)
+  const publicPost = makePublicPostFromDb(post)
 
   return (
     <div>
