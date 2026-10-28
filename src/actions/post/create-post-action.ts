@@ -1,6 +1,12 @@
 "use server"
 
-import { PublicPost } from "@/dto/post"
+import { makePartialPublicPost, PublicPost } from "@/dto/post"
+import { PostCreateSchema } from "@/lib/posts/validations"
+import { PostModel } from "@/models/post/post-model"
+import { getZodErrors } from "@/utils/get-zod-errors"
+import { makeSlug } from "@/utils/make-slug"
+import { v4 as uuidv4 } from "uuid"
+import { slugify } from "zod"
 
 type CreatePostActionState = {
   formState: PublicPost
@@ -22,26 +28,24 @@ export async function createPostAction(
   }
 
   const formDataObject = Object.fromEntries(formData.entries())
+  const zodParsedObj = PostCreateSchema.safeParse(formDataObject)
+
+  if (!zodParsedObj.success) {
+    const errors = getZodErrors(zodParsedObj.error.format())
+    return { errors, formState: makePartialPublicPost(formDataObject) }
+  }
+
+  const validPostData = zodParsedObj.data
+  const newPost: PostModel = {
+    ...validPostData,
+    id: uuidv4(),
+    slug: makeSlug(validPostData.title),
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  }
 
   return {
-    formState: prevState.formState,
+    formState: newPost,
     errors: [],
   }
 }
-
-// {
-//   id: '99f8add4-7684-4c16-a316-616271db199e',
-//   slug: 'rotina-matinal-de-pessoas-altamente-eficazes',
-//   author: 'Isabela Nunes',
-//   title: 'Rotina matinal de pessoas altamente eficazes',
-//   excerpt: 'O Next.js também é uma boa escolha para quem quer se preocupar com performance e SEO.',
-//   content: 'O Next.js também é uma boa escolha para quem quer se preocupar com performance e SEO.',
-//   file: File {
-//     size: 0,
-//     type: 'application/octet-stream',
-//     name: 'blob',
-//     lastModified: 1793210385714
-//   },
-//   coverImageUrl: '/images/bryen_8.png',
-//   published: 'on'
-// }

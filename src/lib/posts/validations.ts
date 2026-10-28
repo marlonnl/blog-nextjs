@@ -48,31 +48,3 @@ export const PostCreateSchema = PostBaseSchema
 export const PostUpdateSchema = PostBaseSchema.extend({
   // id: z.string().uuid('ID inválido'),
 })
-
-const obj = {
-  id: "99f8add4-7684-4c16-a316-616271db199e",
-  slug: "rotina-matinal-de-pessoas-altamente-eficazes",
-  author: "Isabela Nunes",
-  title: "Rotina matinal de pessoas altamente eficazes",
-  excerpt:
-    "O Next.js também é uma boa escolha para quem quer se preocupar com performance e SEO.",
-  content:
-    "O Next.js também é uma boa escolha para quem quer se preocupar com performance e SEO.",
-  file: {
-    size: 0,
-    type: "application/octet-stream",
-    name: "blob",
-    lastModified: 1793210385714,
-  },
-  coverImageUrl: "/images/bryen_8.png",
-  published: "on",
-}
-
-const zodParsedObj = PostCreateSchema.safeParse(obj)
-
-if (!zodParsedObj.success) {
-  const errors = getZodErrors(zodParsedObj.error.format())
-  console.log(errors)
-}
-
-console.log(zodParsedObj)
