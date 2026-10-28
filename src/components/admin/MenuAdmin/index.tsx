@@ -40,6 +40,9 @@ export function MenuAdmin() {
       text-stone-700
       bg-stone-200
 
+      border-2
+      shadow-[2px_2px_0px_0px]
+
       ${!isOpen && "overflow-hidden h-10"}
     `}
     >
