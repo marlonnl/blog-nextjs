@@ -1,12 +1,15 @@
 "use server"
 
+import { drizzleDb } from "@/db/drizzle"
+import { postsTable } from "@/db/drizzle/schemas"
 import { makePartialPublicPost, PublicPost } from "@/dto/post"
 import { PostCreateSchema } from "@/lib/posts/validations"
 import { PostModel } from "@/models/post/post-model"
 import { getZodErrors } from "@/utils/get-zod-errors"
 import { makeSlug } from "@/utils/make-slug"
+import { updateTag } from "next/cache"
+import { redirect } from "next/navigation"
 import { v4 as uuidv4 } from "uuid"
-import { slugify } from "zod"
 
 type CreatePostActionState = {
   formState: PublicPost
@@ -44,8 +47,14 @@ export async function createPostAction(
     updatedAt: new Date().toISOString(),
   }
 
-  return {
-    formState: newPost,
-    errors: [],
-  }
+  // TODO: mover para o repositório
+  await drizzleDb.insert(postsTable).values(newPost)
+
+  updateTag("posts")
+  redirect(`/admin/post/${newPost.id}`)
+
+  // return {
+  //   formState: newPost,
+  //   errors: [],
+  // }
 }
