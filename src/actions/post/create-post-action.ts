@@ -1,7 +1,5 @@
 "use server"
 
-import { drizzleDb } from "@/db/drizzle"
-import { postsTable } from "@/db/drizzle/schemas"
 import { makePartialPublicPost, PublicPost } from "@/dto/post"
 import { PostCreateSchema } from "@/lib/posts/validations"
 import { PostModel } from "@/models/post/post-model"
@@ -15,6 +13,7 @@ import { v4 as uuidv4 } from "uuid"
 type CreatePostActionState = {
   formState: PublicPost
   errors: string[]
+  success?: true
 }
 
 export async function createPostAction(
@@ -47,9 +46,6 @@ export async function createPostAction(
     createdAt: new Date().toISOString(),
     updatedAt: new Date().toISOString(),
   }
-
-  // TODO: mover para o repositório
-  await drizzleDb.insert(postsTable).values(newPost)
 
   try {
     await postRepository.create(newPost)

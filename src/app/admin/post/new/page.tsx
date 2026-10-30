@@ -9,7 +9,7 @@ export default async function AdminPostNewPage() {
   return (
     <div>
       <h2 className="font-bold">Criar novo post</h2>
-      <ManagePostForm />
+      <ManagePostForm mode="create" />
     </div>
   )
 }

@@ -25,7 +25,7 @@ async function PostContent({ params }: AdminPostIdPageProps) {
   return (
     <div>
       <h2 className="font-bold">Editar post</h2>
-      <ManagePostForm publicPost={publicPost} />
+      <ManagePostForm mode="update" publicPost={publicPost} />
     </div>
   )
 }

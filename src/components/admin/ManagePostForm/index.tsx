@@ -10,11 +10,25 @@ import { Button } from "@/components/Button"
 import { createPostAction } from "@/actions/post/create-post-action"
 import { toast } from "react-toastify"
 
-type ManagePostFormProps = {
-  publicPost?: PublicPost
+type ManagePostFormUpdateProps = {
+  mode: "update"
+  publicPost: PublicPost
 }
 
-export function ManagePostForm({ publicPost }: ManagePostFormProps) {
+type ManagePostFormCreateProps = {
+  mode: "create"
+}
+
+type ManagePostFormProps = ManagePostFormUpdateProps | ManagePostFormCreateProps
+
+export function ManagePostForm(props: ManagePostFormProps) {
+  const { mode } = props
+  let publicPost
+
+  if (mode === "update") {
+    publicPost = props.publicPost
+  }
+
   const initialActionState = {
     formState: makePartialPublicPost(publicPost),
     errors: [],
