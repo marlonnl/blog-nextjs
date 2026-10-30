@@ -9,6 +9,7 @@ import { makePartialPublicPost, PublicPost } from "@/dto/post"
 import { Button } from "@/components/Button"
 import { createPostAction } from "@/actions/post/create-post-action"
 import { toast } from "react-toastify"
+import { updatePostAction } from "@/actions/post/update-post-action"
 
 type ManagePostFormUpdateProps = {
   mode: "update"
@@ -29,13 +30,18 @@ export function ManagePostForm(props: ManagePostFormProps) {
     publicPost = props.publicPost
   }
 
+  const actionsMap = {
+    update: updatePostAction,
+    create: createPostAction,
+  }
+
   const initialActionState = {
     formState: makePartialPublicPost(publicPost),
     errors: [],
   }
 
   const [state, action, isPending] = useActionState(
-    createPostAction,
+    actionsMap[mode],
     initialActionState,
   )
 
@@ -62,6 +68,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
             readOnly
             defaultValue={formState.id}
             className="w-[45%]"
+            disabled={isPending}
           />
 
           <Input
@@ -73,6 +80,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
             readOnly
             defaultValue={formState.slug}
             className="w-[50%]"
+            disabled={isPending}
           />
         </div>
 
@@ -82,6 +90,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           type="text"
           placeholder="autor"
           defaultValue={formState.author}
+          disabled={isPending}
         />
 
         <Input
@@ -90,6 +99,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           name="title"
           type="text"
           defaultValue={formState.title}
+          disabled={isPending}
         />
         <Input
           labelText="Trecho/resumo"
@@ -97,11 +107,12 @@ export function ManagePostForm(props: ManagePostFormProps) {
           name="excerpt"
           type="text"
           defaultValue={formState.excerpt}
+          disabled={isPending}
         />
 
         <MarkdownEditor
           labelText="Texto"
-          disabled={false}
+          disabled={isPending}
           textAreaName="content"
           value={contentValue}
           setValue={setContentValue}
@@ -117,6 +128,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
             type="text"
             defaultValue={formState.coverImageUrl}
             className="w-[50%]"
+            disabled={isPending}
           />
 
           <InputCheckbox
@@ -124,10 +136,11 @@ export function ManagePostForm(props: ManagePostFormProps) {
             type="checkbox"
             name="published"
             defaultChecked={formState.published}
+            disabled={isPending}
           />
         </div>
 
-        <Button variant="default" size="lg">
+        <Button variant="default" size="lg" disabled={isPending}>
           Enviar
         </Button>
       </div>
