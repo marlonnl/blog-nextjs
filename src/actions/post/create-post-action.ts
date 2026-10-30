@@ -5,6 +5,7 @@ import { postsTable } from "@/db/drizzle/schemas"
 import { makePartialPublicPost, PublicPost } from "@/dto/post"
 import { PostCreateSchema } from "@/lib/posts/validations"
 import { PostModel } from "@/models/post/post-model"
+import { postRepository } from "@/repositories/post"
 import { getZodErrors } from "@/utils/get-zod-errors"
 import { makeSlug } from "@/utils/make-slug"
 import { updateTag } from "next/cache"
@@ -49,6 +50,21 @@ export async function createPostAction(
 
   // TODO: mover para o repositório
   await drizzleDb.insert(postsTable).values(newPost)
+
+  try {
+    await postRepository.create(newPost)
+  } catch (e: unknown) {
+    if (e instanceof Error) {
+      return {
+        formState: newPost,
+        errors: [e.message],
+      }
+    }
+    return {
+      formState: newPost,
+      errors: ["Erro desconhecido"],
+    }
+  }
 
   updateTag("posts")
   redirect(`/admin/post/${newPost.id}`)
