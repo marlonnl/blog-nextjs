@@ -8,12 +8,13 @@ import {
 import { PostUpdateSchema } from "@/lib/posts/validations"
 import { postRepository } from "@/repositories/post"
 import { getZodErrors } from "@/utils/get-zod-errors"
+import { makeRndString } from "@/utils/make-rnd-string"
 import { updateTag } from "next/cache"
 
 type UpdatePostActionState = {
   formState: PublicPost
   errors: string[]
-  success?: true
+  success?: string
 }
 
 export async function updatePostAction(
@@ -30,7 +31,8 @@ export async function updatePostAction(
     }
   }
 
-  const id = formData.get("id")?.toString || ""
+  const id = formData.get("id")?.toString() || ""
+
   if (!id || typeof id !== "string") {
     return {
       formState: prevState.formState,
@@ -73,6 +75,6 @@ export async function updatePostAction(
   return {
     formState: makePublicPostFromDb(post),
     errors: [],
-    success: true,
+    success: makeRndString(),
   }
 }

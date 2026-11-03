@@ -10,6 +10,7 @@ import { Button } from "@/components/Button"
 import { createPostAction } from "@/actions/post/create-post-action"
 import { toast } from "react-toastify"
 import { updatePostAction } from "@/actions/post/update-post-action"
+import { useRouter, useSearchParams } from "next/navigation"
 
 type ManagePostFormUpdateProps = {
   mode: "update"
@@ -24,6 +25,11 @@ type ManagePostFormProps = ManagePostFormUpdateProps | ManagePostFormCreateProps
 
 export function ManagePostForm(props: ManagePostFormProps) {
   const { mode } = props
+
+  const searchParams = useSearchParams()
+  const created = searchParams.get("created")
+  const router = useRouter()
+
   let publicPost
 
   if (mode === "update") {
@@ -51,6 +57,25 @@ export function ManagePostForm(props: ManagePostFormProps) {
       state.errors.forEach(error => toast.error(error))
     }
   }, [state.errors])
+
+  useEffect(() => {
+    if (state.success) {
+      toast.dismiss()
+      toast.success("Post atualizado com sucesso!")
+    }
+  }, [state.success])
+
+  useEffect(() => {
+    if (created === "1") {
+      toast.dismiss()
+      toast.success("Post criado com sucesso!")
+
+      // remoção do searchparams
+      const url = new URL(window.location.href)
+      url.searchParams.delete("created")
+      router.replace(url.toString())
+    }
+  }, [created, router])
 
   const { formState } = state
   const [contentValue, setContentValue] = useState(publicPost?.content || "")
@@ -118,7 +143,7 @@ export function ManagePostForm(props: ManagePostFormProps) {
           setValue={setContentValue}
         />
 
-        <ImageUploader />
+        <ImageUploader disabled={isPending} />
 
         <div className="flex gap-12 justify-baseline items-end">
           <Input

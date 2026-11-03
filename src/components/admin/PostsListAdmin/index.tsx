@@ -16,7 +16,7 @@ export default async function PostsListAdmin() {
 
   return (
     <div className="mb-16">
-      <h2 className="mb-16 text-4xl font-bold">Admin Post</h2>
+      <h2 className="mb-16 text-4xl font-bold">Admin: lista de postagens</h2>
       <div>
         {posts.map(post => (
           <div
