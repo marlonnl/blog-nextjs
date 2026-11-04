@@ -1,7 +1,6 @@
 import { PostModel } from "@/models/post/post-model"
 import { PostRepository } from "./post-repository"
 import { drizzleDb } from "@/db/drizzle"
-import { logColor } from "@/utils/log-color"
 import { asyncDelay } from "@/utils/async-delay"
 import { SIMULATE_LOADING_TIME } from "@/lib/constants"
 import { postsTable } from "@/db/drizzle/schemas"
@@ -10,7 +9,6 @@ import { eq } from "drizzle-orm"
 export class DrizzlePostRepository implements PostRepository {
   async findAllPublished(): Promise<PostModel[]> {
     await asyncDelay(SIMULATE_LOADING_TIME, true)
-    logColor(Date.now(), "findAllPublished")
 
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, { desc }) => desc(posts.createdAt),
@@ -22,7 +20,7 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findBySlugPublished(slug: string): Promise<PostModel> {
     await asyncDelay(SIMULATE_LOADING_TIME, true)
-    logColor(Date.now(), "findBySlugPublished")
+
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq, and }) =>
         and(eq(post.slug, slug), eq(post.published, true)),
@@ -35,7 +33,6 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findAll(): Promise<PostModel[]> {
     await asyncDelay(SIMULATE_LOADING_TIME, true)
-    logColor(Date.now(), "findAll")
 
     const posts = await drizzleDb.query.posts.findMany({
       orderBy: (posts, { desc }) => desc(posts.createdAt),
@@ -46,7 +43,6 @@ export class DrizzlePostRepository implements PostRepository {
 
   async findById(id: string): Promise<PostModel> {
     await asyncDelay(SIMULATE_LOADING_TIME, true)
-    logColor(Date.now(), "findById")
 
     const post = await drizzleDb.query.posts.findFirst({
       where: (post, { eq }) => eq(post.id, id),
@@ -119,20 +115,3 @@ export class DrizzlePostRepository implements PostRepository {
     }
   }
 }
-
-// ;(async () => {
-//   const repo = new DrizzlePostRepository()
-//   // const posts = await repo.findAll()
-//   // posts.forEach(post => console.log(post.id, post.published))
-
-//   const post = await repo.findBySlugPublished(
-//     "10-habitos-para-aumentar-sua-produtividade",
-//   )
-//   console.log(post.id, post.author)
-// })()
-
-// organizacao-pessoal-por-onde-comecar true
-// 10-habitos-para-aumentar-sua-produtividade false
-
-// 3993fcf7-2490-48ed-be2e-58c2030ee764 true
-// be3f14a1-0105-4e2e-bfc9-133a05e7bda6 false

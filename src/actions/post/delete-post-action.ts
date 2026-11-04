@@ -1,13 +1,10 @@
 "use server"
 
 import { postRepository } from "@/repositories/post"
-import { logColor } from "@/utils/log-color"
 import { updateTag } from "next/cache"
 
 export async function deletePostAction(id: string) {
   // TODO:  check login
-
-  logColor("" + id)
 
   if (!id || typeof id !== "string") {
     return {
