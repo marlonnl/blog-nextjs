@@ -2,7 +2,7 @@
 
 import { Input } from "@/components/Input"
 import { MarkdownEditor } from "@/components/MarkdownEditor"
-import { useActionState, useEffect, useState } from "react"
+import { Suspense, useActionState, useEffect, useState } from "react"
 import { ImageUploader } from "../ImageUploader"
 import { InputCheckbox } from "@/components/InputCheckbox"
 import { makePartialPublicPost, PublicPost } from "@/dto/post"
@@ -11,6 +11,7 @@ import { createPostAction } from "@/actions/post/create-post-action"
 import { toast } from "react-toastify"
 import { updatePostAction } from "@/actions/post/update-post-action"
 import { useRouter, useSearchParams } from "next/navigation"
+import { SpinLoader } from "@/components/SpinLoader"
 
 type ManagePostFormUpdateProps = {
   mode: "update"
@@ -24,6 +25,14 @@ type ManagePostFormCreateProps = {
 type ManagePostFormProps = ManagePostFormUpdateProps | ManagePostFormCreateProps
 
 export function ManagePostForm(props: ManagePostFormProps) {
+  return (
+    <Suspense fallback={<SpinLoader className="min-h-20 mb-16" />}>
+      <ManagePostFormContent {...props} />
+    </Suspense>
+  )
+}
+
+function ManagePostFormContent(props: ManagePostFormProps) {
   const { mode } = props
 
   const searchParams = useSearchParams()
