@@ -1,10 +1,5 @@
 "use server"
 
-import {
-  IMAGE_SERVER_URL,
-  IMAGE_UPLOAD_DIR,
-  IMAGE_UPLOAD_MAX_SIZE,
-} from "@/lib/constants"
 import { mkdir, writeFile } from "fs/promises"
 import { extname, resolve } from "path"
 
@@ -32,7 +27,9 @@ export async function uploadImageAction(
   }
 
   // checagem do tamanho do arquivo
-  if (file.size > IMAGE_UPLOAD_MAX_SIZE) {
+  const uploadMaxSize =
+    Number(process.env.NEXT_PUBLIC_IMAGE_UPLOAD_MAX_SIZE) || 921600
+  if (file.size > uploadMaxSize) {
     return doResult({ error: "Arquivo grande demais" })
   }
 
@@ -44,7 +41,8 @@ export async function uploadImageAction(
   const imageExtension = extname(file.name)
   const uniqueImageName = `${Date.now()}${imageExtension}`
 
-  const uploadPath = resolve(process.cwd(), "public", IMAGE_UPLOAD_DIR)
+  const uploadDir = process.env.IMAGE_UPLOAD_DIR || "uploads"
+  const uploadPath = resolve(process.cwd(), "public", uploadDir)
   await mkdir(uploadPath, { recursive: true })
 
   const fileArrayBuffer = await file.arrayBuffer()
@@ -54,7 +52,8 @@ export async function uploadImageAction(
 
   await writeFile(filePath, buffer)
 
-  const url = `${IMAGE_SERVER_URL}/${uniqueImageName}`
+  const imageUrlServer = process.env.IMAGE_SERVER_URL || ""
+  const url = `${imageUrlServer}/${uniqueImageName}`
 
   return doResult({ url })
 }
