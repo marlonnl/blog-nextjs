@@ -1,5 +1,6 @@
 "use server"
 
+import { verifyLoginSession } from "@/lib/login/manage-login"
 import { mkdir, writeFile } from "fs/promises"
 import { extname, resolve } from "path"
 
@@ -13,6 +14,12 @@ export async function uploadImageAction(
 ): Promise<UploadImageActionResult> {
   const doResult = ({ url = "", error = "" }) => {
     return { url, error }
+  }
+
+  const isAuth = await verifyLoginSession()
+
+  if (!isAuth) {
+    doResult({ error: "Faça login novamente." })
   }
 
   // checagem do form

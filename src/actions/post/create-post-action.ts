@@ -1,6 +1,7 @@
 "use server"
 
 import { makePartialPublicPost, PublicPost } from "@/dto/post"
+import { verifyLoginSession } from "@/lib/login/manage-login"
 import { PostCreateSchema } from "@/lib/posts/validations"
 import { PostModel } from "@/models/post/post-model"
 import { postRepository } from "@/repositories/post"
@@ -20,7 +21,8 @@ export async function createPostAction(
   prevState: CreatePostActionState,
   formData: FormData,
 ): Promise<CreatePostActionState> {
-  // TODO: verificar login
+  // verificar login
+  const isAuth = await verifyLoginSession()
 
   // formData incorreto
   if (!(formData instanceof FormData)) {
@@ -32,6 +34,14 @@ export async function createPostAction(
 
   const formDataObject = Object.fromEntries(formData.entries())
   const zodParsedObj = PostCreateSchema.safeParse(formDataObject)
+
+  // verifica sessao
+  if (!isAuth) {
+    return {
+      formState: makePartialPublicPost(formDataObject),
+      errors: ["É necessário estar logado para salvar."],
+    }
+  }
 
   if (!zodParsedObj.success) {
     const errors = getZodErrors(zodParsedObj.error.format())

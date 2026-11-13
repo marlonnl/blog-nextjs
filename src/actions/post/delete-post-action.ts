@@ -1,10 +1,17 @@
 "use server"
 
+import { verifyLoginSession } from "@/lib/login/manage-login"
 import { postRepository } from "@/repositories/post"
 import { updateTag } from "next/cache"
 
 export async function deletePostAction(id: string) {
-  // TODO:  check login
+  // verificar login
+  const isAuth = await verifyLoginSession()
+  if (!isAuth) {
+    return {
+      errors: ["É necessário estar logado."],
+    }
+  }
 
   if (!id || typeof id !== "string") {
     return {
